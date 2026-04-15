@@ -1,0 +1,463 @@
+/* ==========================================
+   APEX PROPERTIES - LUXURY REAL ESTATE
+   MASTER STYLESHEET
+   ========================================== */
+
+/* --- 1. CSS VARIABLES (THEME ENGINE) --- 
+   Change these colors once, and the entire website updates. 
+/* --- AMARLUX EXECUTIVE BLACK & GOLD THEME --- */
+:root {
+    --primary-color: #000000; /* Pure Executive Black for branding */
+    --accent-color: #D4AF37;  /* Amarlux Luxury Gold */
+    --accent-hover: #B5952F;  /* Slightly darker gold for hover states */
+    --bg-light: #0a0a0a;      /* Swapped to Deep Black for the dark theme background */
+    --text-dark: #ffffff;     /* Swapped to Crisp White for readable text on the black background */
+    --text-muted: #a3a3a3;    /* Silver/Gray for secondary details */
+    --whatsapp-green: #25D366; /* Official WhatsApp Brand Color */
+}
+
+/* --- 2. BASE RESET --- 
+   Strips away default browser margins so our design is consistent everywhere. */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+/* Enables smooth scrolling when clicking navigation links */
+html { 
+    scroll-behavior: smooth; 
+}
+
+/* Base font and background setup */
+body { 
+    font-family: 'Helvetica Neue', Arial, sans-serif; 
+    background-color: var(--bg-light); 
+    color: var(--text-dark); 
+    line-height: 1.6; 
+    overflow-x: hidden; /* CRITICAL: Prevents the page from scrolling sideways on mobile */
+}
+
+/* --- 0. PRELOADER ANIMATION --- */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--primary-color);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease-out, visibility 0.8s;
+}
+
+#preloader.loaded {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-content { text-align: center; }
+
+.loader-content h2 {
+    color: white;
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+    animation: pulseText 1.5s infinite alternate ease-in-out;
+}
+
+.loader-content h2 span { color: var(--accent-color); }
+
+.loader-bar {
+    width: 200px;
+    height: 2px;
+    background: rgba(212, 175, 55, 0.2);
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.loader-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 50%;
+    height: 100%;
+    background: var(--accent-color);
+    animation: loadingSweep 1.2s infinite ease-in-out;
+}
+
+@keyframes pulseText {
+    0% { opacity: 0.7; transform: scale(0.98); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes loadingSweep {
+    0% { left: -50%; }
+    100% { left: 100%; }
+}
+
+/* --- 3. NAVIGATION BAR --- */
+.navbar { 
+    display: flex; 
+    justify-content: space-between; /* Pushes logo left, menu right */
+    align-items: center; 
+    padding: 20px 5%; 
+    background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
+    backdrop-filter: blur(10px); /* Creates the Apple-style frosted glass effect */
+    position: fixed; /* Keeps navbar at the top while scrolling */
+    width: 100%; 
+    top: 0; 
+    z-index: 1000; /* Ensures navbar stays above all other content */
+    transition: 0.3s; /* Smooth animation when scrolling */
+}
+
+/* Applied by JavaScript when the user scrolls down */
+.navbar.scrolled { 
+    padding: 15px 5%; /* Shrinks the navbar slightly */
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1); /* Adds a drop shadow */
+}
+
+/* Logo Styling */
+.logo { 
+    font-size: 1.8rem; 
+    font-weight: 800; 
+    letter-spacing: 2px; 
+    color: var(--primary-color); 
+}
+
+.logo span { 
+    color: var(--accent-color); /* Makes the period gold */
+}
+
+/* Desktop Navigation Links */
+.nav-links { 
+    list-style: none; 
+    display: flex; 
+    gap: 30px; 
+}
+
+.nav-links a { 
+    text-decoration: none; 
+    color: var(--text-dark); 
+    font-weight: 600; 
+    font-size: 0.95rem; 
+    transition: 0.3s; 
+}
+
+.nav-links a:hover { 
+    color: var(--accent-color); 
+}
+
+/* Desktop Contact Agent Button */
+.contact-btn { 
+    padding: 10px 24px; 
+    background-color: var(--primary-color); 
+    color: white; 
+    text-decoration: none; 
+    font-weight: bold; 
+    border-radius: 4px; 
+}
+
+/* Mobile Hamburger Menu Icon (Hidden on desktop by default) */
+.menu-toggle { 
+    display: none; 
+    flex-direction: column; 
+    cursor: pointer; 
+    gap: 5px; 
+    z-index: 1001; /* Must be higher than the slide-out menu */
+}
+
+/* The individual lines of the hamburger icon */
+.bar { 
+    width: 25px; 
+    height: 3px; 
+    background-color: var(--primary-color); 
+    transition: 0.3s; 
+}
+
+/* --- 3. CINEMATIC HERO --- */
+.hero { 
+    height: 100vh; 
+    /* Using a stunning, high-quality architectural background */
+    background: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1920&q=80') center/cover; 
+    display: flex; align-items: center; justify-content: center; text-align: center; 
+}
+
+/* Darkens the background image so the white text is readable */
+.hero-overlay { 
+    background: rgba(15, 23, 42, 0.7); 
+    width: 100%; 
+    height: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 0 20px; 
+}
+
+.hero h1 { 
+    color: white; 
+    font-size: 4rem; 
+    font-weight: 700; 
+    margin-bottom: 15px; 
+}
+
+.highlight { 
+    color: var(--accent-color); 
+}
+
+.hero p { 
+    color: #e2e8f0; 
+    font-size: 1.2rem; 
+    margin-bottom: 40px; 
+}
+
+/* Search Bar Container */
+.search-bar { 
+    display: flex; 
+    width: 100%; 
+    max-width: 600px; 
+    background: white; 
+    border-radius: 8px; 
+    overflow: hidden; 
+}
+
+.search-bar input { 
+    flex: 1; /* Makes input field take up remaining space */
+    padding: 20px; 
+    border: none; 
+    outline: none; 
+}
+
+.search-btn { 
+    padding: 0 30px; 
+    background: var(--accent-color); 
+    color: white; 
+    border: none; 
+    font-weight: bold; 
+    cursor: pointer; 
+}
+
+/* --- 5. PROPERTY LISTINGS & GRID --- */
+.listings-section { 
+    padding: 100px 5%; 
+}
+
+.section-title { 
+    text-align: center; 
+    margin-bottom: 60px; 
+}
+
+/* CSS Grid Magic: Automatically creates columns based on screen width */
+.property-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+    gap: 40px; 
+}
+
+/* Individual Property Card Styling */
+.property-card { 
+    background: white; 
+    border-radius: 12px; 
+    overflow: hidden; 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05); 
+    transition: 0.3s; /* Smooth hover animation */
+}
+
+/* Lifts the card up slightly when hovered */
+.property-card:hover { 
+    transform: translateY(-10px); 
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1); 
+}
+
+/* Image/Video Container at the top of the card */
+.property-image { 
+    position: relative; 
+    height: 250px; 
+    overflow: hidden; 
+}
+
+/* Forces images and videos to perfectly fill the box without stretching */
+.property-image img, 
+.property-image video { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
+
+/* 'For Sale' or 'New Listing' Tags */
+.badge { 
+    position: absolute; 
+    top: 20px; 
+    left: 20px; 
+    background: var(--accent-color); 
+    color: white; 
+    padding: 5px 15px; 
+    font-size: 0.8rem; 
+    font-weight: bold; 
+    border-radius: 4px; 
+    z-index: 10; 
+}
+
+.badge.premium { 
+    background: var(--primary-color); 
+    border: 1px solid var(--accent-color); 
+}
+
+/* Text Content Area of the Card */
+.property-details { 
+    padding: 25px; 
+}
+
+.property-details h3 { 
+    font-size: 1.3rem; 
+    color: var(--primary-color); 
+    margin-bottom: 5px; 
+}
+
+.location { 
+    color: var(--text-muted); 
+    font-size: 0.9rem; 
+    margin-bottom: 15px; 
+}
+
+/* The Beds/Baths/Garage layout */
+.specs { 
+    display: flex; 
+    justify-content: space-between; 
+    padding: 15px 0; 
+    border-top: 1px solid #e2e8f0; 
+    border-bottom: 1px solid #e2e8f0; 
+    margin-bottom: 20px; 
+    font-size: 0.9rem; 
+    color: var(--text-muted); 
+}
+
+/* Container for Price and WhatsApp Button */
+.price-action { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    flex-wrap: wrap; /* Fix: Drops button to next line if screen is too small */
+    gap: 15px; 
+}
+
+.price { 
+    font-size: 1.4rem; 
+    font-weight: 800; 
+    color: var(--primary-color); 
+}
+
+/* WhatsApp Direct Booking Button */
+.whatsapp-btn { 
+    background: var(--whatsapp-green); 
+    color: white; 
+    padding: 10px 20px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    border-radius: 6px; 
+    transition: 0.2s; 
+    white-space: nowrap; /* Fix: Stops 'Book Viewing' text from splitting */
+    flex-shrink: 0; /* Fix: Prevents the button from being squished */
+}
+
+.whatsapp-btn:hover { 
+    transform: scale(1.05); /* Slight "pop" effect on hover */
+}
+
+/* --- 6. SCROLL REVEAL ANIMATIONS --- 
+   These classes are managed by script.js */
+
+/* Default state: pushed down 50px and invisible */
+.reveal { 
+    transform: translateY(50px); 
+    opacity: 0; 
+    transition: 0.8s ease-out; 
+}
+
+/* Active state: slides up to normal position and fades in */
+.reveal.active { 
+    transform: translateY(0); 
+    opacity: 1; 
+}
+
+/* --- 7. FOOTER --- */
+.footer { 
+    background: var(--primary-color); 
+    color: white; 
+    text-align: center; 
+    padding: 50px 5%; 
+}
+
+.footer h2 { 
+    color: var(--accent-color); 
+    margin-bottom: 10px; 
+}
+
+.credit { 
+    margin-top: 30px; 
+    font-size: 0.9rem; 
+    color: #94a3b8; 
+}
+
+.credit a { 
+    color: var(--accent-color); 
+    text-decoration: none; 
+}
+
+/* --- 8. MOBILE RESPONSIVENESS (Phones and small tablets) --- 
+   Any rules inside here only activate if the screen is 768px wide or smaller */
+@media (max-width: 768px) {
+    
+    /* Show the hamburger menu icon */
+    .menu-toggle { display: flex; }
+    
+    /* Hide the desktop contact button */
+    .desktop-contact { display: none; }
+    
+    /* Show the mobile contact button inside the slide-out menu */
+    .mobile-contact { display: block; margin-top: 20px; }
+    .mobile-contact a { 
+        background: var(--primary-color); 
+        color: white !important; 
+        padding: 12px 20px; 
+        border-radius: 4px; 
+        display: inline-block; 
+    }
+    
+    /* The Slide-Out Menu styling */
+    .nav-links { 
+        position: absolute; 
+        top: 0; 
+        right: -100%; /* Hides the menu completely off the right side of the screen */
+        height: 100vh; 
+        width: 70%; 
+        max-width: 300px; 
+        background: white; 
+        flex-direction: column; 
+        align-items: center; 
+        justify-content: center; 
+        transition: 0.4s; 
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1); 
+    }
+    
+    /* When JS adds the .active class, slide the menu in */
+    .nav-links.active { right: 0; }
+    
+    /* Hamburger to 'X' Animations */
+    .menu-toggle.is-active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); } /* Rotates top line */
+    .menu-toggle.is-active .bar:nth-child(2) { opacity: 0; } /* Hides middle line */
+    .menu-toggle.is-active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); } /* Rotates bottom line */
+    
+    /* Shrink the massive hero text for smaller screens */
+    .hero h1 { font-size: 2.5rem; }
+    
+    /* Stack the search bar vertically */
+    .search-bar { flex-direction: column; }
+    .search-btn { padding: 20px; }
+}
